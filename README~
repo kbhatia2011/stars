@@ -1,0 +1,102 @@
+NOTE:
+This readme is beautifully indented. If it doesn't seem so
+please make the window you're viewing this on larger. 
+I promise it'll be worth it :) 
+
+
+KNOWN BUGS:
+The radius function is flawed. It passes all system tests. But it doesn't include the original
+data point star in its results. For this reason I take issue with it - so should you. 
+
+DESIGN:
+
+My design relies on 8 classes which are:
+
+	1)point: The point is a class that is a super class of a star. 
+		 It allows for me to process input points from the user 
+		 and search them in the KDTree. But it also allows me
+		 to compare them with stars - which are a subclass of
+		 points.  
+
+	2)KDTree: The KDTree I have made stores stars at each node. Each node has a local
+		  star (the data point) and a left and a right kdtree. This class has the 
+		  following functions:
+			a) sortIndex: takes in a list of stars and an index which 
+				is dependent on depth. It returns a list of stars
+				sorted by x, y or z index. This function makes
+				it easier to find the median of the lot.
+			b) makeTree: this function makes the tree. It takes
+				in a list of stars and runs recursively on 
+				the left and right node. Data is stored at
+				each level of the tree. I decided no to store
+				data only at the leaves of trees because the
+				tree would then be huge!!!
+			c) nearestNeigbhors: I accidentally spelled neighbors wrong.
+				sorry abou that. This function returns the k
+				nearest neighbors of a point. I used an algorithm
+				that I found on wikipedia to make this happen. 
+			d) KnearestNeigbhors: basically is a wrapper function. It
+				takes the work that nearestNeigbhors did and turns
+				it into an ArrayList.
+			e) RnearestNeighors: runs recursively - finds all the neighbors
+				within a given radius. Although, I have been having some
+				issues with this particular method. 
+			f) RadiusMethod: turns the efforts of RnearestNeighbors into a pretty
+				ArrayList. Nothing much else. 
+
+	3)Node: The KDTree is made of Nodes - the root is a node. From the nodes stem more KDTrees. 
+
+	4)star: a star is a subclass of a point. It does what a point does, except it can
+		have a name and an id number.
+
+ 	5)Distance: Distances allow for easy sorting for output at the end of a neighbor or
+		    radius search. They store a point and a numerical distance.
+
+	6)Reader: this class is responsible for dealing with the file the user inputs. 
+		  these files contain the information to be stored in the KDTree and the
+		  reader prepares all the information in the files so that they may simply
+		  be added to the KDTree in the Processor class. This class contains the following 
+		  methods:
+			a. reading: This method reads in the lines of the file, and outputs
+				    an ArrayList of String[]; 
+
+	7)Processor: this class processes the user inputs and interacts with the user. It is also
+		     responsible for setting up the tree based on user input. It contains the 
+		     following methods:
+			a. DirtyWork(): reads the output of the Reader and sets up the local
+					KDTree. 
+			b. gotime(): this method deals with user input. It is one large while loop.
+
+	8)starsmain: this class doesn't do much. It simply accepts the initial file arguments
+			   and initializes a processor.
+
+TESTING:
+
+My program has several JUnit Tests and System tests too. 
+These may be run in the following manner:
+
+System tests: ./bin/tester.py ./bin/stars ./data/Suites/*
+JUnit test: 
+
+
+
+RUNNING THE PROGRAM:
+
+My program may be run in the following manner:
+
+./bin/stars <insert argument (ex: filename)>
+
+
+THANK YOU:
+
+To whomever is grading this, thanks for your patience. 
+This project was super cool - I'm still confused about the inner workings
+of a KDTree - beyond a certain point, I can no longer visualize how the 
+nearest neighbors search algortihm works. I've been doing some reading
+on it, but it usually goes over my head. I hope to come into hours to discuss
+it soon. Thanks! 
+
+
+
+
+
